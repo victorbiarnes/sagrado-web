@@ -12,3 +12,8 @@ if (!is_file($DATA_DIR . '/fixture.json') && is_file(__DIR__ . '/datos/fixture.j
     @copy(__DIR__ . '/datos/fixture.json', $DATA_DIR . '/fixture.json');
 }
 if (!is_file($DATA_DIR . '/.htaccess')) { @file_put_contents($DATA_DIR . '/.htaccess', "Require all denied\n"); }
+// Primera vez: queda guardada solo la huella del código de instalación (el código real lo tiene el club).
+if (!is_file($DATA_DIR . '/auth.php') && is_file(__DIR__ . '/setup_huella.txt')) {
+    $cfg0 = ['setup' => '', 'setuphash' => trim(file_get_contents(__DIR__ . '/setup_huella.txt')), 'hash' => ''];
+    @file_put_contents($DATA_DIR . '/auth.php', "<?php exit; ?>\n" . json_encode($cfg0) . "\n");
+}

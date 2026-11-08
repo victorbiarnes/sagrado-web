@@ -40,6 +40,7 @@ $cfg = [];
 if (is_file($authFile)) { $raw = file_get_contents($authFile); $nl = strpos($raw, "\n"); $cfg = $nl === false ? [] : json_decode(substr($raw, $nl + 1), true); if (!is_array($cfg)) $cfg = []; }
 $hash = $cfg['hash'] ?? '';
 $setup = $cfg['setup'] ?? '';
+$setuphash = $cfg['setuphash'] ?? '';
 
 if ($action === 'estado') out(['ok' => true, 'configurado' => $hash !== '']);
 
@@ -51,8 +52,10 @@ if (count($fails) >= 8) out(['ok' => false, 'error' => 'Demasiados intentos. Esp
 function fail($msg, $fails, $failFile, $code = 401) { $fails[] = time(); @file_put_contents($failFile, json_encode($fails)); usleep(1200000); out(['ok' => false, 'error' => $msg], $code); }
 
 if ($action === 'setup') {
-    if ($hash !== '' || $setup === '') out(['ok' => false, 'error' => 'La clave ya fue configurada.'], 409);
-    if (!hash_equals($setup, trim((string)($in['codigo'] ?? '')))) fail('Código de instalación incorrecto.', $fails, $failFile);
+    if ($hash !== '' || ($setup === '' && $setuphash === '')) out(['ok' => false, 'error' => 'La clave ya fue configurada.'], 409);
+    $cod = trim((string)($in['codigo'] ?? ''));
+    $okc = ($setup !== '' && hash_equals($setup, $cod)) || ($setuphash !== '' && password_verify($cod, $setuphash));
+    if (!$okc) fail('Código de instalación incorrecto.', $fails, $failFile);
     $clave = (string)($in['clave'] ?? '');
     if (mb_strlen($clave) < 8) out(['ok' => false, 'error' => 'La clave tiene que tener al menos 8 caracteres.'], 400);
     $new = "<?php exit; ?>\n" . json_encode(['setup' => '', 'hash' => password_hash($clave, PASSWORD_DEFAULT)]) . "\n";
