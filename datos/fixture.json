@@ -222,35 +222,55 @@
   "hora": "08:30"
  },
  {
+  "id": "m17",
+  "fecha": "2026-11-10",
+  "titulo": "Femenino 1era vs Banco Nación",
+  "nota": "Semifinal (vuelta) · Estadio cubierto de Newell’s",
+  "items": [
+   {
+    "cat": "Femenino 1era",
+    "hora": "22:00"
+   }
+  ],
+  "hora": "22:00"
+ },
+ {
+  "id": "m18",
+  "fecha": "2026-11-12",
+  "titulo": "Remeros vs Sagrado",
+  "nota": "Primera · Cuartos de final (ida) · De visitante",
+  "items": [
+   {
+    "cat": "Primera",
+    "hora": "20:30"
+   }
+  ],
+  "hora": "20:30"
+ },
+ {
   "id": "m15",
   "fecha": "2026-11-14",
   "titulo": "Sub-20 Femenino vs Central",
-  "nota": "En Aurora · Pasó al próximo finde · Horario a confirmar",
+  "nota": "En Aurora",
   "items": [
    {
     "cat": "Sub-20",
-    "txt": "a confirmar"
+    "hora": "17:00"
    }
-  ]
+  ],
+  "hora": "17:00"
  },
  {
-  "id": "m12",
-  "fecha": null,
-  "titulo": "Primera · Cuartos de final",
-  "nota": "Sagrado vs Remeros",
+  "id": "m19",
+  "fecha": "2026-11-16",
+  "titulo": "Sagrado vs Remeros",
+  "nota": "Primera · Cuartos de final (vuelta) · La Fortaleza",
   "items": [
    {
-    "cat": "Ida",
-    "txt": "De visitante"
-   },
-   {
-    "cat": "Vuelta",
-    "txt": "La Fortaleza"
-   },
-   {
-    "cat": "Horarios",
-    "txt": "a confirmar"
+    "cat": "Primera",
+    "hora": "21:00"
    }
-  ]
+  ],
+  "hora": "21:00"
  }
 ]
