@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0b0b0c">
+<title>Cargar resultados · Sagrado</title>
+<style>
+:root{--bg:#0b0b0c;--card:#17171a;--line:#2a2a2f;--tx:#f4f1ea;--mut:#9a968c;--gold:#d9b25a;--ok:#4cc38a;--bad:#e5645b}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:0 16px 80px}
+main{max-width:520px;margin:0 auto}
+h1{font-size:22px;margin:22px 0 4px}h1 span{color:var(--gold)}
+p.sub{color:var(--mut);margin:0 0 18px;font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+label{display:block;font-size:13px;color:var(--mut);margin:12px 0 4px}
+input,select,textarea{width:100%;font:inherit;color:var(--tx);background:#0f0f11;border:1px solid var(--line);border-radius:10px;padding:12px;min-height:46px}
+input:focus,select:focus{outline:2px solid var(--gold);border-color:transparent}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;min-height:48px;padding:0 18px;font-weight:700}
+.pri{background:var(--gold);color:#1a1405;width:100%;margin-top:16px}
+.sec{background:#26262b;color:var(--tx)}
+.row{display:flex;gap:8px}.row>*{flex:1;min-width:0}
+.seg{display:flex;gap:6px}.seg button{flex:1;background:#0f0f11;color:var(--mut);border:1px solid var(--line);min-height:44px}
+.seg button.on{background:var(--gold);color:#1a1405;border-color:var(--gold)}
+.cat{display:grid;grid-template-columns:1.2fr 1fr auto 1fr auto;gap:6px;align-items:center;margin-top:8px}
+.cat.h{grid-template-columns:1.2fr 1fr auto}
+.cat b{font-size:15px}.cat .dash{color:var(--mut);text-align:center}
+.cat input{text-align:center;padding:8px}
+.x{background:none;color:var(--mut);min-height:40px;padding:0 8px}
+.msg{padding:10px 12px;border-radius:10px;margin:12px 0;font-size:14px;display:none}
+.msg.e{display:block;background:#3a1816;color:#ffb4ad}.msg.o{display:block;background:#12301f;color:#9fe3bf}
+.m{border-top:1px solid var(--line);padding:12px 0}.m:first-child{border:0}
+.m small{color:var(--mut)}.m .t{font-weight:700}
+.m .c{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.m .c span{font-size:13px;background:#0f0f11;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.m .c span.G{border-color:var(--ok)}.m .c span.P{border-color:var(--bad)}
+.m .b{display:flex;gap:8px}.m .b button{min-height:38px;font-size:14px;flex:0 0 auto}
+.hid{display:none!important}
+.tabs{display:flex;gap:8px;margin-bottom:14px}.tabs button{flex:1}
+.tabs button.on{background:var(--gold);color:#1a1405}
+.lnk{background:none;color:var(--mut);text-decoration:underline;min-height:36px;padding:0;font-weight:400}
+</style></head><body><main>
+<h1>Atlético <span>Sagrado Corazón</span></h1>
+<p class="sub">Carga de resultados y partidos</p>
+
+<section id="v-setup" class="card hid">
+ <b>Primera vez: elegí tu clave</b>
+ <label>Código de instalación (te lo pasó Claude)</label><input id="s-cod" autocomplete="off" autocapitalize="characters">
+ <label>Tu clave nueva (mínimo 8 caracteres)</label><input id="s-c1" type="password" autocomplete="new-password">
+ <label>Repetí la clave</label><input id="s-c2" type="password" autocomplete="new-password">
+ <div id="s-msg" class="msg"></div>
+ <button class="pri" id="s-go">Guardar clave</button>
+</section>
+
+<section id="v-login" class="card hid">
+ <label style="margin-top:0">Clave</label><input id="l-c" type="password" autocomplete="current-password">
+ <div id="l-msg" class="msg"></div>
+ <button class="pri" id="l-go">Entrar</button>
+</section>
+
+<section id="v-app" class="hid">
+ <div class="tabs"><button class="sec on" id="t-new">Cargar</button><button class="sec" id="t-list">Partidos</button></div>
+
+ <div id="p-new">
+  <div class="card">
+   <b id="f-title">Nuevo partido</b>
+   <div class="row">
+    <div><label>Fecha</label><input id="f-fecha" type="date"></div>
+    <div><label>Hora (si no se jugó)</label><input id="f-hora" type="time"></div>
+   </div>
+   <label>Rival</label><input id="f-rival" placeholder="Ej: Newell’s" autocomplete="off">
+   <label>Condición</label>
+   <div class="seg" id="f-cond"><button type="button" data-v="L" class="on">Local</button><button type="button" data-v="V">Visitante</button></div>
+   <label>Lugar / nota (opcional)</label><input id="f-nota" placeholder="Ej: En La Fortaleza · Cuartos de final">
+  </div>
+  <div class="card">
+   <b>Categorías</b>
+   <label>Tipo de carga</label>
+   <div class="seg" id="f-mode"><button type="button" data-v="res" class="on">Resultado</button><button type="button" data-v="hor">Horario</button></div>
+   <div id="f-cats"></div>
+   <div class="row" style="margin-top:12px">
+    <select id="f-add"></select>
+    <button class="sec" id="f-addb" type="button" style="flex:0 0 auto">+ Agregar</button>
+   </div>
+  </div>
+  <div id="f-msg" class="msg"></div>
+  <button class="pri" id="f-save">Guardar partido</button>
+  <button class="sec" id="f-cancel" style="width:100%;margin-top:8px" hidden>Cancelar edición</button>
+ </div>
+
+ <div id="p-list" class="card hid"><div id="list"></div></div>
+ <p style="text-align:center;margin-top:20px"><button class="lnk" id="out">Salir</button></p>
+</section>
+</main>
+<script>
+var CATS=["Primera","Reserva","4ta","5ta","6ta","7ma","8va","9na","Femenino 1era","Sub-20 Femenino","Veteranos","Súper Veteranos","Handball","Otro"];
+var $=function(i){return document.getElementById(i)},CLAVE="",FX=[],EDIT=null,EDT=null,COND="L",MODE="res",ROWS=[];
+function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function api(b){return fetch("guardar.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)}).then(function(r){return r.json().catch(function(){return{ok:false,error:"El servidor no respondió bien (¿PHP activo?)."}})}).catch(function(){return{ok:false,error:"Sin conexión."}})}
+function msg(id,t,ok){var e=$(id);e.className="msg "+(t?(ok?"o":"e"):"");e.textContent=t||""}
+function show(v){["v-setup","v-login","v-app"].forEach(function(x){$(x).classList.toggle("hid",x!==v)})}
+CATS.forEach(function(c){var o=document.createElement("option");o.textContent=c;$("f-add").appendChild(o)});
+function init(){
+ try{CLAVE=sessionStorage.getItem("sc")||""}catch(e){}
+ api({action:"estado"}).then(function(r){
+  if(!r.ok){show("v-login");msg("l-msg",r.error);return}
+  if(!r.configurado){show("v-setup");return}
+  if(CLAVE){doLogin(true)}else show("v-login")})}
+$("s-go").onclick=function(){
+ var a=$("s-c1").value;if(a!==$("s-c2").value){msg("s-msg","Las claves no coinciden.");return}
+ api({action:"setup",codigo:$("s-cod").value,clave:a}).then(function(r){
+  if(!r.ok){msg("s-msg",r.error);return}
+  CLAVE=a;doLogin()})};
+$("l-go").onclick=function(){CLAVE=$("l-c").value;doLogin()};
+$("l-c").onkeydown=function(e){if(e.key==="Enter")$("l-go").click()};
+function doLogin(silent){
+ api({action:"login",clave:CLAVE}).then(function(r){
+  if(!r.ok){if(!silent)msg("l-msg",r.error);try{sessionStorage.removeItem("sc")}catch(e){}show("v-login");return}
+  try{sessionStorage.setItem("sc",CLAVE)}catch(e){}
+  FX=r.fixture;show("v-app");reset();renderList()})}
+$("out").onclick=function(){CLAVE="";try{sessionStorage.removeItem("sc")}catch(e){}$("l-c").value="";show("v-login")};
+function tab(n){$("p-new").classList.toggle("hid",n!=="new");$("p-list").classList.toggle("hid",n!=="list");$("t-new").classList.toggle("on",n==="new");$("t-list").classList.toggle("on",n==="list")}
+$("t-new").onclick=function(){tab("new")};$("t-list").onclick=function(){tab("list")};
+function seg(id,fn){var b=$(id).children;for(var i=0;i<b.length;i++)b[i].onclick=function(){for(var j=0;j<b.length;j++)b[j].classList.remove("on");this.classList.add("on");fn(this.dataset.v)}}
+function setSeg(id,v){var b=$(id).children;for(var i=0;i<b.length;i++)b[i].classList.toggle("on",b[i].dataset.v===v)}
+seg("f-cond",function(v){COND=v});
+seg("f-mode",function(v){grab();MODE=v;ROWS=ROWS.map(function(r){return{cat:r.cat,hora:r.hora,txt:r.txt}});drawRows()});
+function grab(){var g=$("f-cats").querySelectorAll(".cat");ROWS=[].map.call(g,function(el,i){var inp=el.querySelectorAll("input");return MODE==="res"?{cat:ROWS[i].cat,hora:ROWS[i].hora,txt:ROWS[i].txt,gf:inp[0].value,gc:inp[1].value}:{cat:ROWS[i].cat,hora:inp[0].value,txt:ROWS[i].txt}})}
+function drawRows(){
+ $("f-cats").innerHTML=ROWS.map(function(r,i){
+  return MODE==="res"?'<div class="cat"><b>'+esc(r.cat)+'</b><input type="number" inputmode="numeric" min="0" max="99" placeholder="SC" value="'+esc(r.gf)+'"><span class="dash">–</span><input type="number" inputmode="numeric" min="0" max="99" placeholder="Rival" value="'+esc(r.gc)+'"><button class="x" data-i="'+i+'" type="button">✕</button></div>'
+  :'<div class="cat h"><b>'+esc(r.cat)+'</b><input type="time" value="'+esc(r.hora)+'"><button class="x" data-i="'+i+'" type="button">✕</button></div>'}).join("");
+ [].forEach.call($("f-cats").querySelectorAll(".x"),function(b){b.onclick=function(){grab();ROWS.splice(+b.dataset.i,1);drawRows()}})}
+$("f-addb").onclick=function(){grab();var c=$("f-add").value;if(c==="Otro"){c=(prompt("Nombre de la categoría")||"").trim();if(!c)return}ROWS.push({cat:c});drawRows()};
+function reset(){EDIT=null;EDT=null;COND="L";MODE="res";ROWS=[];setSeg("f-cond","L");setSeg("f-mode","res");$("f-fecha").value="";$("f-hora").value="";$("f-rival").value="";$("f-nota").value="";$("f-title").textContent="Nuevo partido";$("f-cancel").hidden=true;drawRows()}
+$("f-cancel").onclick=function(){reset();msg("f-msg","")};
+$("f-save").onclick=function(){
+ grab();var rv=$("f-rival").value.trim();if(!rv){msg("f-msg","Falta el rival.");return}
+ var titulo=(EDT&&rv===EDT)?EDT:COND==="L"?"Sagrado vs "+rv:rv+" vs Sagrado";
+ var items=ROWS.map(function(r){if(MODE==="res"){return(r.gf!==""&&r.gf!=null&&r.gc!==""&&r.gc!=null)?{cat:r.cat,gf:r.gf,gc:r.gc}:(r.hora?{cat:r.cat,hora:r.hora}:(r.txt?{cat:r.cat,txt:r.txt}:null))}return r.hora?{cat:r.cat,hora:r.hora}:(r.txt?{cat:r.cat,txt:r.txt}:null)}).filter(Boolean);
+ if(!items.length){msg("f-msg","Agregá al menos una categoría con "+(MODE==="res"?"goles":"horario")+".");return}
+ var m={id:EDIT,fecha:$("f-fecha").value||null,hora:$("f-hora").value||null,titulo:titulo,nota:$("f-nota").value,items:items};
+ $("f-save").disabled=true;
+ api({action:"save",clave:CLAVE,match:m}).then(function(r){
+  $("f-save").disabled=false;
+  if(!r.ok){msg("f-msg",r.error);return}
+  FX=r.fixture;reset();renderList();msg("f-msg","¡Guardado! Ya se ve en la web.",true)})};
+function fdate(f){if(!f)return"Sin fecha";var p=f.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
+function renderList(){
+ var L=FX.slice().reverse();
+ $("list").innerHTML=L.length?L.map(function(m){
+  return '<div class="m"><small>'+fdate(m.fecha)+(m.hora?" · "+esc(m.hora):"")+'</small><div class="t">'+esc(m.titulo)+'</div><div class="c">'+m.items.map(function(i){
+   if(typeof i.gf==="number"){var k=i.gf>i.gc?"G":i.gf<i.gc?"P":"";return'<span class="'+k+'">'+esc(i.cat)+' '+i.gf+'–'+i.gc+'</span>'}
+   return'<span>'+esc(i.cat)+' '+esc(i.hora||i.txt||"")+'</span>'}).join("")+'</div><div class="b">'+(m.items.some(function(i){return typeof i.gf==="number"})?"":'<button class="pri" style="margin:0;width:auto;min-height:38px;font-size:14px" data-r="'+esc(m.id)+'">Cargar resultado</button>')+'<button class="sec" data-e="'+esc(m.id)+'">Editar</button><button class="sec" data-d="'+esc(m.id)+'" style="color:var(--bad)">Borrar</button></div></div>'}).join(""):"Todavía no hay partidos.";
+ [].forEach.call($("list").querySelectorAll("[data-e]"),function(b){b.onclick=function(){edit(b.dataset.e)}});
+ [].forEach.call($("list").querySelectorAll("[data-r]"),function(b){b.onclick=function(){edit(b.dataset.r);MODE="res";setSeg("f-mode","res");ROWS=ROWS.map(function(r){return{cat:r.cat,hora:r.hora,txt:r.txt}});drawRows();$("f-title").textContent="Cargar resultado"}});
+ [].forEach.call($("list").querySelectorAll("[data-d]"),function(b){b.onclick=function(){del(b.dataset.d)}})}
+function edit(id){
+ var m=FX.filter(function(x){return x.id===id})[0];if(!m)return;
+ EDIT=id;var t=m.titulo,loc=true,rv=t;
+ var a=t.match(/^Sagrado vs (.+)$/),b=t.match(/^(.+) vs Sagrado$/);
+ if(a){rv=a[1]}else if(b){rv=b[1];loc=false}else{EDT=t}
+ COND=loc?"L":"V";setSeg("f-cond",COND);
+ $("f-fecha").value=m.fecha||"";$("f-hora").value=m.hora||"";$("f-rival").value=rv;$("f-nota").value=m.nota||"";
+ MODE=m.items.some(function(i){return typeof i.gf==="number"})?"res":"hor";setSeg("f-mode",MODE);
+ ROWS=m.items.map(function(i){return MODE==="res"?{cat:i.cat,gf:i.gf,gc:i.gc,hora:i.hora,txt:i.txt}:{cat:i.cat,txt:i.txt,hora:(i.hora||"").replace(/^(\d):/,"0$1:")}});
+ $("f-title").textContent="Editando partido";$("f-cancel").hidden=false;drawRows();tab("new");window.scrollTo(0,0)}
+function del(id){if(!confirm("¿Borrar este partido?"))return;api({action:"delete",clave:CLAVE,id:id}).then(function(r){if(r.ok){FX=r.fixture;renderList()}else alert(r.error)})}
+init();
+</script></body></html>

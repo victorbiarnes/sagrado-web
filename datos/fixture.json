@@ -1,0 +1,256 @@
+[
+ {
+  "id": "m01",
+  "fecha": "2026-10-23",
+  "titulo": "Sagrado vs Newell’s",
+  "nota": "En La Fortaleza",
+  "items": [
+   {
+    "cat": "Primera",
+    "gf": 3,
+    "gc": 2
+   },
+   {
+    "cat": "Reserva",
+    "gf": 0,
+    "gc": 0
+   }
+  ],
+  "hora": "21:00"
+ },
+ {
+  "id": "m02",
+  "fecha": "2026-10-24",
+  "titulo": "Sagrado vs Remeros",
+  "nota": "En La Fortaleza",
+  "items": [
+   {
+    "cat": "4ta",
+    "gf": 1,
+    "gc": 1
+   },
+   {
+    "cat": "5ta",
+    "gf": 4,
+    "gc": 2
+   },
+   {
+    "cat": "6ta",
+    "gf": 4,
+    "gc": 7
+   },
+   {
+    "cat": "7ma",
+    "gf": 6,
+    "gc": 8
+   },
+   {
+    "cat": "8va",
+    "gf": 3,
+    "gc": 3
+   }
+  ],
+  "hora": "08:30"
+ },
+ {
+  "id": "m03",
+  "fecha": "2026-10-27",
+  "titulo": "Banco Nación vs Sagrado",
+  "nota": "Cuartos de final · Cancha neutral: Unión Central",
+  "items": [
+   {
+    "cat": "Veteranos",
+    "gf": 1,
+    "gc": 2
+   }
+  ]
+ },
+ {
+  "id": "m04",
+  "fecha": "2026-10-28",
+  "titulo": "Marista vs Sagrado",
+  "nota": "Cuartos de final (ida) · Visitante en calle Alvear",
+  "items": [
+   {
+    "cat": "Femenino 1era",
+    "gf": 2,
+    "gc": 0
+   }
+  ],
+  "hora": "20:45"
+ },
+ {
+  "id": "m05",
+  "fecha": "2026-10-29",
+  "titulo": "Sagrado vs Social Lux",
+  "nota": "En La Fortaleza",
+  "items": [
+   {
+    "cat": "Súper Veteranos",
+    "gf": 5,
+    "gc": 3
+   }
+  ]
+ },
+ {
+  "id": "m06",
+  "fecha": "2026-10-31",
+  "titulo": "Rowing vs Sagrado",
+  "nota": "De visitante · Rowing · Todas las categorías, de 4ta a 9na",
+  "items": [
+   {
+    "cat": "4ta",
+    "gf": 1,
+    "gc": 3
+   },
+   {
+    "cat": "5ta",
+    "gf": 2,
+    "gc": 4
+   },
+   {
+    "cat": "6ta",
+    "gf": 1,
+    "gc": 5
+   },
+   {
+    "cat": "7ma",
+    "gf": 0,
+    "gc": 8
+   },
+   {
+    "cat": "8va",
+    "gf": 4,
+    "gc": 4
+   }
+  ],
+  "hora": "08:30"
+ },
+ {
+  "id": "m07",
+  "fecha": "2026-10-31",
+  "titulo": "Sub-20 Femenino vs Remeros",
+  "nota": "En Aurora",
+  "items": [
+   {
+    "cat": "Sub-20 Femenino",
+    "gf": 1,
+    "gc": 3
+   }
+  ],
+  "hora": "15:00"
+ },
+ {
+  "id": "m11",
+  "fecha": "2026-11-02",
+  "titulo": "Femenino 1era vs Marista",
+  "nota": "Local · Cuartos de final (vuelta) · La Fortaleza · Ida: ganamos 2 a 0",
+  "items": [
+   {
+    "cat": "Hora",
+    "gf": 2,
+    "gc": 2
+   }
+  ],
+  "hora": "21:00"
+ },
+ {
+  "id": "m13",
+  "fecha": "2026-11-04",
+  "titulo": "Rowing vs Sagrado",
+  "nota": "3ra · Cuartos de final · Pasó Rowing por penales",
+  "items": [
+   {
+    "cat": "3ra",
+    "gf": 3,
+    "gc": 3
+   }
+  ],
+  "hora": "20:30"
+ },
+ {
+  "id": "m16",
+  "fecha": "2026-11-05",
+  "titulo": "Femenino 1era vs Banco Nación",
+  "nota": "Semifinal (ida) · Estadio cubierto de Newell’s",
+  "items": [
+   {
+    "cat": "Hora",
+    "gf": 2,
+    "gc": 1
+   }
+  ],
+  "hora": "20:30"
+ },
+ {
+  "id": "m14",
+  "fecha": "2026-11-07",
+  "titulo": "Newell’s vs Sagrado",
+  "nota": "De 4ta a 9na · De visitante",
+  "items": [
+   {
+    "cat": "4ta",
+    "gf": 0,
+    "gc": 10
+   },
+   {
+    "cat": "5ta",
+    "gf": 0,
+    "gc": 6
+   },
+   {
+    "cat": "6ta",
+    "gf": 2,
+    "gc": 3
+   },
+   {
+    "cat": "7ma",
+    "gf": 1,
+    "gc": 3
+   },
+   {
+    "cat": "8va",
+    "gf": 6,
+    "gc": 5
+   },
+   {
+    "cat": "9na",
+    "gf": 0,
+    "gc": 11
+   }
+  ],
+  "hora": "08:30"
+ },
+ {
+  "id": "m15",
+  "fecha": "2026-11-14",
+  "titulo": "Sub-20 Femenino vs Central",
+  "nota": "En Aurora · Pasó al próximo finde · Horario a confirmar",
+  "items": [
+   {
+    "cat": "Sub-20",
+    "txt": "a confirmar"
+   }
+  ]
+ },
+ {
+  "id": "m12",
+  "fecha": null,
+  "titulo": "Primera · Cuartos de final",
+  "nota": "Sagrado vs Remeros",
+  "items": [
+   {
+    "cat": "Ida",
+    "txt": "De visitante"
+   },
+   {
+    "cat": "Vuelta",
+    "txt": "La Fortaleza"
+   },
+   {
+    "cat": "Horarios",
+    "txt": "a confirmar"
+   }
+  ]
+ }
+]

@@ -1095,7 +1095,7 @@ function load(d){
  var HR=HB.filter(function(m){return m.fecha&&(m.fecha===today||(m.fecha===yd&&hr<18))&&m.items.some(function(i){return typeof i.gf==="number"})});
  R=R.concat(HR);
  if(window.__scNext)window.__scNext(M,R,H)}
-try{fetch("datos/fixture.json?ts="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():Promise.reject()}).then(load).catch(function(){})}catch(e){}
+try{fetch("fixture.php?ts="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():Promise.reject()}).then(load).catch(function(){})}catch(e){}
 })();
 </script>
 <script>(function(){function fit(){var ul=document.querySelector(".top nav ul");if(!ul)return;var a=ul.querySelectorAll("a"),cta=document.querySelector(".top .pill-cta"),logo=document.querySelector(".top nav")&&document.querySelector(".top nav").previousElementSibling;
