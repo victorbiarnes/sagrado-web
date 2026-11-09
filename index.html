@@ -357,6 +357,8 @@ table.pos.arch td.pt{white-space:nowrap}.an{color:var(--muted);font-weight:400;f
 .hero .hs[data-key=fal] .fal-q{margin:0;font-style:italic;font-size:clamp(15px,2.2vw,24px);line-height:1.5;color:#ECE7DF;text-shadow:0 1px 14px rgba(0,0,0,.75)}
 .hero .hs[data-key=indu] .indu-ph{display:block;width:100%;max-width:420px;height:150px;object-fit:cover;object-position:50% 24%;margin:20px 0 0;border-radius:10px;border:1px solid rgba(246,241,234,.18)}
 @media(min-width:901px){.hero .hs[data-key=indu] .indu-ph{display:none}}
+.hero .hs[data-key=cap] .cap-ph{display:block;width:100%;max-width:420px;height:auto;margin:18px 0 0}
+@media(min-width:901px){.hero .hs[data-key=cap] .cap-ph{display:none}}
 .hero .hs[data-key=fal] .fal-ph{display:block;width:100vw;max-width:none;height:auto;margin:20px 0 0 calc(50% - 50vw);-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 30%);mask-image:linear-gradient(180deg,transparent 0%,#000 30%)}
 @media(min-width:901px){.hero .hs[data-key=fal] .fal-ph{display:none}
 .hero .hs[data-key=fal] .fal-t{margin:0 0 20px}
@@ -367,7 +369,7 @@ table.pos.arch td.pt{white-space:nowrap}.an{color:var(--muted);font-weight:400;f
 .hero .hs[data-key=fal] .fal-q{font-size:clamp(15px,1.45vw,22px)}}
 </style>
 <section class="hero">
-    <div hidden aria-hidden="true" id="bgsrc"><img id="bgsrc-cua" src="img/otros-86.webp" alt=""><img id="bgsrc-o8" src="img/otros-85.webp" alt=""><img id="bgsrc-hbn" alt="" src="hb26-05.webp"><img id="bgsrc-semi" alt="" src="img/bgsrc-semi-01.webp"><img id="bgsrc-indu" src="img/bgsrc-indu-01.webp" alt=""><img id="bgsrc-cap" src="img/bgsrc-cap-02.webp" alt=""></div>
+    <div hidden aria-hidden="true" id="bgsrc"><img id="bgsrc-cua" src="img/otros-86.webp" alt=""><img id="bgsrc-o8" src="img/otros-85.webp" alt=""><img id="bgsrc-hbn" alt="" src="hb26-05.webp"><img id="bgsrc-semi" alt="" src="img/bgsrc-semi-01.webp"><img id="bgsrc-indu" src="img/bgsrc-indu-01.webp" alt=""><img id="bgsrc-cap" src="img/bgsrc-cap-03.webp" alt=""></div>
     <div class="hbg on" data-key="indu"></div><div class="hbg" data-key="cua"></div><div class="hbg" data-key="hbn"></div><div class="hbg" data-key="cap"></div><div class="hbg" data-key="sv"></div><div class="hbg" data-key="o8"></div><div class="hbg" data-key="cal"><video src="img/calle-recreativa.mp4" poster="img/calle-recreativa-poster.webp" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video></div>
     
     <div class="wrap">
@@ -397,6 +399,7 @@ table.pos.arch td.pt{white-space:nowrap}.an{color:var(--muted);font-weight:400;f
           <h1>Vení a probarte <span class="s">al Sagrado.</span></h1>
           <p class="lead"><b>1 mes de prueba gratis desde el 09/11.</b> No hace falta ser alumno/a de la escuela. Masculino: categorías 2019 a 2010 · Femenino: Sub-16 y Sub-20.</p>
           <div class="cta"><a class="btn" href="#nv-sumate">Ver la novedad</a><a class="btn ghost" href="https://www.instagram.com/atleticosagradook" target="_blank" rel="noopener">Sumate a entrenar</a></div>
+          <img class="cap-ph" src="img/cap-strip.webp" alt="Una jugadora del Femenino del Sagrado y un jugador del masculino de inferiores" loading="lazy">
         </div>
         <div class="hs" data-key="sv">
           <p class="eyebrow">Futsal · Súper Veteranos</p>
@@ -460,7 +463,7 @@ table.pos.arch td.pt{white-space:nowrap}.an{color:var(--muted);font-weight:400;f
     B('hbn',find('#bgsrc-hbn'),mob?{p:'50% 42%'}:{g:'linear-gradient(90deg,#141210 0%,#141210 22%,rgba(20,18,16,0) 52%),linear-gradient(180deg,rgba(20,18,16,.25) 0%,rgba(20,18,16,.85) 100%),',c:'#141210',s:'auto 100%',p:'right top'});
     B('pat',pat,{p:'50% 30%'});
     if(!mob)B('indu',find('#bgsrc-indu'),{g:'linear-gradient(90deg,#141210 0%,#141210 38%,rgba(20,18,16,0) 60%),',c:'#141210',s:'auto 100%',p:'right top'});
-    B('cap',find('#bgsrc-cap'),mob?{g:'linear-gradient(180deg,#141210 0,#141210 255px,rgba(20,18,16,.55) 420px,rgba(20,18,16,.25) 600px,rgba(20,18,16,.85) 100%),',c:'#141210',s:'auto 1000px',p:'64% 250px'}:{g:shadeA,c:'#141210',s:'auto 100%',p:'right top'});
+    if(!mob)B('cap',find('#bgsrc-cap'),{g:'linear-gradient(90deg,#141210 0%,rgba(20,18,16,0) 6%),',c:'#141210',s:'auto 100%',p:'right center'});
   }
   var gone={};
   function show(i,dir){
