@@ -1067,6 +1067,7 @@ function load(d){
    var rv=rival(m),fem=/femenino/.test(ctx(m)),best=null;
    d.forEach(function(x){if(!x||!x.fecha||x.fecha>=m.fecha||!/\bida\b/i.test(x.nota||"")||rival(x)!==rv||/femenino/.test(ctx(x))!==fem)return;
     var it=(x.items||[]).filter(function(i){return typeof i.gf==="number"&&typeof i.gc==="number"})[0];if(it&&(!best||x.fecha>best.f))best={f:x.fecha,gf:it.gf,gc:it.gc}});
+   if(!best){var K={"femenino|banco nacion":[2,1]}[(fem?"femenino":"masc")+"|"+rv];if(K)best={f:"",gf:K[0],gc:K[1]}}
    if(!best)return m;
    var tx=best.gf>best.gc?"ganamos "+best.gf+" a "+best.gc:best.gf<best.gc?"perdimos "+best.gc+" a "+best.gf:"empatamos "+best.gf+" a "+best.gc;
    var o={};for(var k in m)o[k]=m[k];var n=String(m.nota),p=n.indexOf(" · ");o.nota=p>0?n.slice(0,p)+" · Ida: "+tx+n.slice(p):n+" · Ida: "+tx;return o})})();
