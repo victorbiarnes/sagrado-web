@@ -993,7 +993,7 @@ if(location.hash)addEventListener("load",function(){settle(location.hash.slice(1
 <script>
 (function(){
 var TZ="America/Argentina/Buenos_Aires";
-var M0=[{d:"2026-10-23T21:00:00-03:00",t:"Sagrado vs Newell’s",w:"Primera · La Fortaleza"},{d:"2026-10-24T08:30:00-03:00",t:"Sagrado vs Remeros",w:"De 4ta a 9na · La Fortaleza"},{d:"2026-10-28T20:45:00-03:00",t:"Marista vs Sagrado",w:"Femenino 1era · Cuartos de final (ida)"},{d:"2026-10-31T08:30:00-03:00",t:"Rowing vs Sagrado",w:"De 4ta a 9na · Visitante",c:[["4ta","8:30"],["5ta","9:30"],["6ta","10:30"],["7ma","11:30"],["8va","12:30"],["9na","13:30"]]},{d:"2026-10-31T15:00:00-03:00",t:"Sagrado Sub-20 Femenino vs Remeros",w:"Sub-20 Femenino · Aurora"},{d:"2026-11-02T21:00:00-03:00",t:"Femenino 1era vs Marista",w:"Cuartos de final (vuelta) · Ida: ganamos 2 a 0 · La Fortaleza"},{d:"2026-11-05T20:30:00-03:00",t:"Femenino 1era vs Banco Nación",w:"Semifinal (ida) · Estadio cubierto de Newell’s"}];
+var M0=[{d:"2026-10-23T21:00:00-03:00",t:"Sagrado vs Newell’s",w:"Primera · La Fortaleza"},{d:"2026-10-24T08:30:00-03:00",t:"Sagrado vs Remeros",w:"De 4ta a 9na · La Fortaleza"},{d:"2026-10-28T20:45:00-03:00",t:"Marista vs Sagrado",w:"Femenino 1era · Cuartos de final (ida)"},{d:"2026-10-31T08:30:00-03:00",t:"Rowing vs Sagrado",w:"De 4ta a 9na · Visitante",c:[["4ta","8:30"],["5ta","9:30"],["6ta","10:30"],["7ma","11:30"],["8va","12:30"],["9na","13:30"]]},{d:"2026-10-31T15:00:00-03:00",t:"Sagrado Sub-20 Femenino vs Remeros",w:"Sub-20 Femenino · Aurora"},{d:"2026-11-02T21:00:00-03:00",t:"Femenino 1era vs Marista",w:"Cuartos de final (vuelta) · Ida: ganamos 2 a 0 · La Fortaleza"},{d:"2026-11-05T20:30:00-03:00",t:"Femenino 1era vs Banco Nación",w:"Semifinal (ida) · Estadio cubierto de Newell’s"},{d:"2026-11-10T22:00:00-03:00",t:"Femenino 1era vs Banco Nación",w:"Semifinal (vuelta) · Ida: ganamos 2 a 1 · Estadio cubierto de Newell’s"}];
 var rotT=null;
 function showRes(R,i){
 var m=R[i%R.length],el=document.getElementById("next");el.hidden=false;
@@ -1058,6 +1058,18 @@ function load(d){
  d=d.map(function(m){if(!m||!Array.isArray(m.items))return m;var out=[],ch=false;m.items.forEach(function(i){var q=/^\s*(\d)(?:ta|va|ma|na|ra|da)?\s*a\s*(\d)(?:ta|va|ma|na|ra|da)?\s*$/i.exec(i.cat||""),t=/(\d{1,2}):(\d\d)/.exec(i.txt||i.hora||"");
   if(q&&t&&+q[2]>+q[1]&&+q[2]-+q[1]<=6&&typeof i.gf!=="number"){var N={4:"4ta",5:"5ta",6:"6ta",7:"7ma",8:"8va",9:"9na"};for(var c=+q[1],h=+t[1];c<=+q[2];c++,h++){if(!N[c])continue;out.push({cat:N[c],hora:h+":"+t[2]})}ch=true}else out.push(i)});
   if(!ch)return m;var o={};for(var k in m)o[k]=m[k];o.items=out;return o});
+ /* Partido de vuelta de una serie: agrega el resultado de la ida a la nota (ej. "Ida: ganamos 2 a 1") */
+ (function(){function nz(t){return String(t||"").normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’'`]/g,"").toLowerCase().trim()}
+  function rival(m){var t=String(m.titulo||"").split(/\s+vs\s+/i);if(t.length!==2)return"";return nz(/sagrado/i.test(t[1])?t[0]:t[1]).replace(/^(femenino|primera|reserva|sub-?20)[^a-z]*(1era|femenino)?\s*/,"")}
+  function ctx(m){return nz((m.nota||"")+" "+(m.items||[]).map(function(i){return i.cat}).join(" ")+" "+(m.titulo||"")).replace(/\s+/g," ")}
+  var IDA0={};
+  d=d.map(function(m){if(!m||!m.fecha||!/vuelta/i.test(m.nota||"")||/ida:/i.test(m.nota||""))return m;
+   var rv=rival(m),fem=/femenino/.test(ctx(m)),best=null;
+   d.forEach(function(x){if(!x||!x.fecha||x.fecha>=m.fecha||!/\bida\b/i.test(x.nota||"")||rival(x)!==rv||/femenino/.test(ctx(x))!==fem)return;
+    var it=(x.items||[]).filter(function(i){return typeof i.gf==="number"&&typeof i.gc==="number"})[0];if(it&&(!best||x.fecha>best.f))best={f:x.fecha,gf:it.gf,gc:it.gc}});
+   if(!best)return m;
+   var tx=best.gf>best.gc?"ganamos "+best.gf+" a "+best.gc:best.gf<best.gc?"perdimos "+best.gc+" a "+best.gf:"empatamos "+best.gf+" a "+best.gc;
+   var o={};for(var k in m)o[k]=m[k];var n=String(m.nota),p=n.indexOf(" · ");o.nota=p>0?n.slice(0,p)+" · Ida: "+tx+n.slice(p):n+" · Ida: "+tx;return o})})();
  if(window.__scApply){try{window.__scApply(d)}catch(e){}}
  (function hide(tries){try{var sl=document.querySelectorAll('.hs[data-match]');if(sl.length&&!window.__scHideSlide&&tries<20)return setTimeout(function(){hide(tries+1)},300);sl.forEach(function(s){var q=s.getAttribute('data-match').split('|'),re=new RegExp(q[0],'i');if(d.some(function(m){return m&&m.fecha===q[1]&&re.test(m.titulo||'')&&Array.isArray(m.items)&&m.items.some(function(i){return typeof i.gf==='number'})}))window.__scHideSlide(s.getAttribute('data-key'))})}catch(e){}})(0);
  var today=new Date().toLocaleDateString("en-CA",{timeZone:TZ}),lim=new Date(Date.parse(today)-10*86400000).toISOString().slice(0,10);
