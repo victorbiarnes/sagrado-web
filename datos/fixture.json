@@ -269,7 +269,8 @@
   "items": [
    {
     "cat": "Femenino 1era",
-    "hora": "16:30"
+    "gf": 1,
+    "gc": 3
    }
   ],
   "hora": "16:30"
