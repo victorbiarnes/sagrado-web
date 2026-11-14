@@ -249,19 +249,6 @@
   "hora": "20:30"
  },
  {
-  "id": "m15",
-  "fecha": "2026-11-14",
-  "titulo": "Sub-20 Femenino vs Central",
-  "nota": "En Aurora",
-  "items": [
-   {
-    "cat": "Sub-20",
-    "hora": "17:00"
-   }
-  ],
-  "hora": "17:00"
- },
- {
   "id": "m19",
   "fecha": "2026-11-16",
   "titulo": "Sagrado vs Remeros",

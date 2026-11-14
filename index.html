@@ -1129,7 +1129,7 @@ function card(m){
  var r=hasRes(m),n=m.items.filter(function(i){return typeof i.gf==="number"}).length,
  pe=m.items.length>n,nota=(r?(pe?"Resultados parciales":n>1?"Resultados finales":"Resultado final")+(m.nota?" · ":""):"")+(m.nota||"");
  return '<article class="match"'+(m.dep==="Handball"&&m.fecha&&/^\d{1,2}:\d\d$/.test(m.hora||"")&&m.hora!=="00:00"?' data-start="'+m.fecha+'T'+("0"+m.hora).slice(-5)+'"':'')+'><div class="tab">'+tab+'</div><div class="match-body"><span class="dep '+(m.dep==="Handball"?"h":"f")+'">'+esc(m.dep||"Futsal")+'</span><h3>'+esc(m.titulo)+'</h3>'+(nota?'<p>'+esc(nota)+'</p>':'')+'<div class="chips">'+m.items.map(chip).join("")+'</div></div></article>'}
-function load(d){
+function load(d){d=(d||[]).filter(function(m){return m&&m.id!=='m15'});if(!d.some(function(m){return m&&m.fecha==='2026-11-14'&&/Horizonte/i.test(m.titulo||'')}))d.push({id:'m20',fecha:'2026-11-14',titulo:'Femenino 1era vs Horizonte',nota:'Final · Estadio Cubierto Claudio Newell',items:[{cat:'Femenino 1era',hora:'16:30'}],hora:'16:30'});
  if(!Array.isArray(d)||!d.length)return;
  d=d.map(function(m){if(m&&m.fecha==="2026-11-10"&&/femenino.*banco naci/i.test(m.titulo||"")&&/vuelta/i.test(m.nota||"")&&Array.isArray(m.items)&&!m.items.some(function(i){return typeof i.gf==="number"})){var o={};for(var q in m)o[q]=m[q];o.items=[{cat:"Femenino 1era",gf:5,gc:2,hora:"22:00"}];return o}return m});
  d=d.map(function(m){if(!m||!Array.isArray(m.items))return m;var out=[],ch=false;m.items.forEach(function(i){var q=/^\s*(\d)(?:ta|va|ma|na|ra|da)?\s*a\s*(\d)(?:ta|va|ma|na|ra|da)?\s*$/i.exec(i.cat||""),t=/(\d{1,2}):(\d\d)/.exec(i.txt||i.hora||"");
