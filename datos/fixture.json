@@ -273,5 +273,18 @@
    }
   ],
   "hora": "21:00"
+ },
+ {
+  "id": "m20",
+  "fecha": "2026-11-14",
+  "titulo": "Femenino 1era vs Horizonte",
+  "nota": "Final · Estadio Cubierto Claudio Newell",
+  "items": [
+   {
+    "cat": "Femenino 1era",
+    "hora": "16:30"
+   }
+  ],
+  "hora": "16:30"
  }
 ]
