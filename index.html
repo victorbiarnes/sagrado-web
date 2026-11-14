@@ -295,6 +295,7 @@ table.pos.arch td.pt{white-space:nowrap}.an{color:var(--muted);font-weight:400;f
 .pos tr.me td{font-weight:700;color:var(--accent-text)}
 @media(min-width:901px){#submenu-hb{grid-template-columns:1.5fr 1.2fr}}
 .sponsor-extra{display:flex;justify-content:center;margin-top:22px}.sponsor-extra img{height:58px;width:auto;max-width:80%}@media(min-width:700px){.sponsor-extra img{height:72px}}
+.fin-t{font-size:clamp(30px,8vw,64px)!important}@media(min-width:701px){.fin-t{font-size:clamp(44px,4.6vw,66px)!important}}
 </style>
 
 <style>
@@ -379,7 +380,7 @@ table.pos.arch td.pt{white-space:nowrap}.an{color:var(--muted);font-weight:400;f
 .hero .hs[data-key=fal] .fal-q{font-size:clamp(15px,1.45vw,22px)}}
 </style>
 <section class="hero">
-    <div hidden aria-hidden="true" id="bgsrc"><img id="bgsrc-cua" src="img/otros-86.webp" alt=""><img id="bgsrc-o8" src="img/otros-85.webp" alt=""><img id="bgsrc-hbn" alt="" src="hb26-05.webp"><img id="bgsrc-hbj" src="img/bgsrc-hbj.webp" alt=""><img id="bgsrc-hbs" src="img/hb-semifinales.webp" alt=""><img id="bgsrc-cuf" src="img/futsal-cuartos.webp" alt=""><img id="bgsrc-fin" src="img/bgsrc-fem-final.webp" alt=""><img id="bgsrc-semi" alt="" src="img/bgsrc-semi-01.webp"><img id="bgsrc-indu" src="img/bgsrc-indu-01.webp" alt=""><img id="bgsrc-cap" src="img/bgsrc-cap-03.webp" alt=""></div>
+    <div hidden aria-hidden="true" id="bgsrc"><img id="bgsrc-cua" src="img/otros-86.webp" alt=""><img id="bgsrc-o8" src="img/otros-85.webp" alt=""><img id="bgsrc-hbn" alt="" src="hb26-05.webp"><img id="bgsrc-hbj" src="img/bgsrc-hbj.webp" alt=""><img id="bgsrc-hbs" src="img/hb-semifinales.webp" alt=""><img id="bgsrc-cuf" src="img/futsal-cuartos.webp" alt=""><img id="bgsrc-fin" src="img/fem-final-hoy.webp" alt=""><img id="bgsrc-semi" alt="" src="img/bgsrc-semi-01.webp"><img id="bgsrc-indu" src="img/bgsrc-indu-01.webp" alt=""><img id="bgsrc-cap" src="img/bgsrc-cap-03.webp" alt=""></div>
     <div class="hbg on" data-key="fin"></div><div class="hbg" data-key="cuf"><video src="video/gol-remeros.mp4" poster="img/gol-remeros-poster.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video></div><div class="hbg" data-key="hbj"></div><div class="hbg" data-key="hbs"></div><div class="hbg" data-key="indu"></div><div class="hbg" data-key="cua"></div><div class="hbg" data-key="hbn"></div><div class="hbg" data-key="cap"></div><div class="hbg" data-key="sv"></div><div class="hbg" data-key="o8"></div><div class="hbg" data-key="cal"><video src="img/calle-recreativa.mp4" poster="img/calle-recreativa-poster.webp" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video></div>
     
     <div class="wrap">
@@ -387,8 +388,8 @@ table.pos.arch td.pt{white-space:nowrap}.an{color:var(--muted);font-weight:400;f
         <div class="hslides" aria-live="off">
         <div class="hs on" data-key="fin">
           <p class="eyebrow">Futsal · Femenino · Primera · Final hoy · 16:30</p>
-          <h1 class="sm">Estas chicas <span class="s">nos malacostumbran.</span></h1>
-          <p class="lead">😎 Una vez más: nuestro primer equipo y Horizonte vuelven a verse las caras en la gran final, hoy 16:30 en el Estadio Cubierto Claudio Newell. ¡Vamos, chicas! 🤍🖤</p>
+          <h1 class="sm fin-t">Una vez más, estas chicas <span class="s">nos malacostumbran&nbsp;😎</span></h1>
+          <p class="lead">Nuestro primer equipo y Horizonte vuelven a verse las caras en la gran final, hoy 16:30 en el Estadio Cubierto Claudio Newell. ¡Vamos, chicas! 🤍🖤</p>
           <div class="cta"><a class="btn" href="#nv-femhoy">Leer la noticia</a><a class="btn ghost" href="#partidos">Próximos partidos</a></div>
         </div>
         <div class="hs" data-key="cuf">
@@ -524,7 +525,7 @@ table.pos.arch td.pt{white-space:nowrap}.an{color:var(--muted);font-weight:400;f
     B('cua',find('#bgsrc-cua'),mob?null:{g:shadeP,c:'#141210',s:'auto 100%',p:'right top'});
     B('o8',find('#bgsrc-o8'),mob?null:{g:shadeP,c:'#141210',s:'auto 100%',p:'right 30%'});
     B('hbn',find('#bgsrc-hbn'),mob?null:{g:'linear-gradient(90deg,#141210 0%,#141210 22%,rgba(20,18,16,0) 52%),linear-gradient(180deg,rgba(20,18,16,.25) 0%,rgba(20,18,16,.85) 100%),',c:'#141210',s:'auto 100%',p:'right top'});
-    B('fin',find('#bgsrc-fin'),mob?null:{g:shadeP,c:'#141210',s:'auto 100%',p:'right 20%'});
+    B('fin',find('#bgsrc-fin'),mob?null:{g:shadeP,c:'#141210',s:'auto 72%',p:'right 12%'});
     if(!mob)B('hbs',find('#bgsrc-hbs'),{g:'linear-gradient(90deg,#141210 0%,#141210 42%,rgba(20,18,16,0) 66%),',c:'#141210',s:'auto 86%',p:'right 70px'});
     B('hbj',find('#bgsrc-hbj'),mob?null:{g:'linear-gradient(90deg,#141210 0%,#141210 38%,rgba(20,18,16,0) 62%),',c:'#141210',s:'auto 100%',p:'right top'});
     B('pat',pat,{p:'50% 30%'});
