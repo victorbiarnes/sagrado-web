@@ -1,0 +1,12 @@
+# El HTML siempre se revalida: así las novedades se ven apenas se publican
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|php|webmanifest)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "^(sw\.js|index\.html)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+<IfModule mod_dir.c>
+  DirectoryIndex index.html index.php
+</IfModule>
