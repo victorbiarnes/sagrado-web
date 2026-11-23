@@ -84,7 +84,7 @@ if ($action === 'aviso') {
     $tit = clean($in['titulo'] ?? '', 60); $txt = clean($in['texto'] ?? '', 180);
     if ($tit === '' || $txt === '') out(['ok' => false, 'error' => 'Completá el título y el mensaje.'], 400);
     $url = (string)($in['url'] ?? '');
-    if (!preg_match('#^https://atleticosagradocorazon\.com\.ar/#', $url)) $url = 'https://atleticosagradocorazon.com.ar/';
+    if (!preg_match('#^https://(atleticosagradocorazon\.com\.ar/|docs\.google\.com/forms/)#', $url)) $url = 'https://atleticosagradocorazon.com.ar/';
     $body = json_encode(['app_id' => $OS_APP, 'target_channel' => 'push', 'included_segments' => ['Total Subscriptions'],
         'headings' => ['en' => $tit, 'es' => $tit], 'contents' => ['en' => $txt, 'es' => $txt], 'url' => $url], JSON_UNESCAPED_UNICODE);
     $auth = (strpos($key, 'os_v2_') === 0 ? 'Key ' : 'Basic ') . $key;
