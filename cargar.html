@@ -58,7 +58,7 @@ button{font:inherit;cursor:pointer;border:0;border-radius:12px;min-height:48px;p
 </section>
 
 <section id="v-app" class="hid">
- <div class="tabs"><button class="sec on" id="t-new">Cargar</button><button class="sec" id="t-list">Partidos</button></div>
+ <div class="tabs"><button class="sec on" id="t-new">Cargar</button><button class="sec" id="t-list">Partidos</button><button class="sec" id="t-av">Aviso 🔔</button></div>
 
  <div id="p-new">
   <div class="card">
@@ -88,6 +88,28 @@ button{font:inherit;cursor:pointer;border:0;border-radius:12px;min-height:48px;p
  </div>
 
  <div id="p-list" class="card hid"><div id="list"></div></div>
+ <div id="p-av" class="hid">
+  <div class="card">
+   <b>Mandar aviso al celular</b>
+   <p class="sub" style="margin:6px 0 0">Les llega como notificación a todos los que activaron los avisos de la web/app.</p>
+   <label>Título</label><input id="a-tit" maxlength="60" placeholder="Ej: Hoy juega la Primera 🖤🤍">
+   <label>Mensaje</label><textarea id="a-txt" maxlength="180" rows="3" placeholder="Ej: 21 h en el Sagrado. Vení a alentar"></textarea>
+   <label>Al tocarlo abre</label>
+   <select id="a-url"><option value="https://atleticosagradocorazon.com.ar/">Inicio de la web</option><option value="https://atleticosagradocorazon.com.ar/#partidos">Próximos partidos</option><option value="https://atleticosagradocorazon.com.ar/#novedades">Novedades</option><option value="https://atleticosagradocorazon.com.ar/#galeria">Galería</option></select>
+   <div id="a-msg" class="msg"></div>
+   <button class="pri" id="a-go">Mandar aviso</button>
+  </div>
+  <div class="card">
+   <b>Clave de OneSignal</b> <small id="a-st" style="color:var(--mut)"></small>
+   <div id="a-kbox">
+    <p class="sub" style="margin:6px 0 0">Se carga una sola vez. En OneSignal: Settings → Keys &amp; IDs → copiá la <b>REST API Key</b> y pegala acá.</p>
+    <label>REST API Key</label><input id="a-key" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <div id="k-msg" class="msg"></div>
+    <button class="sec" id="a-ksave" style="width:100%;margin-top:12px">Guardar clave</button>
+   </div>
+  </div>
+ </div>
+
  <p style="text-align:center;margin-top:20px"><button class="lnk" id="out">Salir</button></p>
 </section>
 </main>
@@ -118,8 +140,16 @@ function doLogin(silent){
   try{sessionStorage.setItem("sc",CLAVE)}catch(e){}
   FX=r.fixture;show("v-app");reset();renderList()})}
 $("out").onclick=function(){CLAVE="";try{sessionStorage.removeItem("sc")}catch(e){}$("l-c").value="";show("v-login")};
-function tab(n){$("p-new").classList.toggle("hid",n!=="new");$("p-list").classList.toggle("hid",n!=="list");$("t-new").classList.toggle("on",n==="new");$("t-list").classList.toggle("on",n==="list")}
-$("t-new").onclick=function(){tab("new")};$("t-list").onclick=function(){tab("list")};
+function tab(n){["new","list","av"].forEach(function(k){$("p-"+k).classList.toggle("hid",n!==k);$("t-"+k).classList.toggle("on",n===k)});if(n==="av")avEstado()}
+$("t-new").onclick=function(){tab("new")};$("t-list").onclick=function(){tab("list")};$("t-av").onclick=function(){tab("av")};
+function avEstado(){api({action:"aviso_estado",clave:CLAVE}).then(function(r){if(!r.ok)return;$("a-st").textContent=r.tieneClave?"· cargada ✔":"· falta cargar";$("a-kbox").classList.toggle("hid",!!r.tieneClave&&!AVK)})}
+var AVK=false;$("a-st").onclick=function(){AVK=true;$("a-kbox").classList.remove("hid")};
+$("a-ksave").onclick=function(){api({action:"aviso_clave",clave:CLAVE,key:$("a-key").value}).then(function(r){if(!r.ok){msg("k-msg",r.error);return}$("a-key").value="";AVK=false;msg("k-msg","Clave guardada.",true);avEstado()})};
+$("a-go").onclick=function(){var t=$("a-tit").value.trim(),x=$("a-txt").value.trim();if(!t||!x){msg("a-msg","Completá el título y el mensaje.");return}
+ if(!confirm("¿Mandar este aviso a todos?\n\n"+t+"\n"+x))return;$("a-go").disabled=true;msg("a-msg","Mandando…",true);
+ api({action:"aviso",clave:CLAVE,titulo:t,texto:x,url:$("a-url").value}).then(function(r){$("a-go").disabled=false;if(!r.ok){msg("a-msg",r.error);return}msg("a-msg","Aviso enviado 🔔",true);$("a-tit").value="";$("a-txt").value=""})};
+function avDesde(m){var res=m.items.filter(function(i){return typeof i.gf==="number"});if(!res.length)return;
+ var x=res.map(function(i){return i.cat+" "+i.gf+"–"+i.gc}).join(" · ");$("a-tit").value=("Final: "+m.titulo).slice(0,60);$("a-txt").value=(x+". Vamos Sagrado 🖤🤍").slice(0,180);$("a-url").value="https://atleticosagradocorazon.com.ar/#partidos";tab("av");window.scrollTo(0,0)}
 function seg(id,fn){var b=$(id).children;for(var i=0;i<b.length;i++)b[i].onclick=function(){for(var j=0;j<b.length;j++)b[j].classList.remove("on");this.classList.add("on");fn(this.dataset.v)}}
 function setSeg(id,v){var b=$(id).children;for(var i=0;i<b.length;i++)b[i].classList.toggle("on",b[i].dataset.v===v)}
 seg("f-cond",function(v){COND=v});
@@ -143,7 +173,7 @@ $("f-save").onclick=function(){
  api({action:"save",clave:CLAVE,match:m}).then(function(r){
   $("f-save").disabled=false;
   if(!r.ok){msg("f-msg",r.error);return}
-  FX=r.fixture;reset();renderList();msg("f-msg","¡Guardado! Ya se ve en la web.",true)})};
+  FX=r.fixture;reset();renderList();msg("f-msg","¡Guardado! Ya se ve en la web.",true);if(m.items.some(function(i){return i.gf!=null&&i.gf!==""})){var mm={titulo:m.titulo,items:m.items.map(function(i){return{cat:i.cat,gf:i.gf!=null&&i.gf!==""?+i.gf:undefined,gc:+i.gc}})};var b=document.createElement("button");b.className="sec";b.style.cssText="width:100%;margin-top:8px";b.textContent="🔔 Mandar aviso con este resultado";b.onclick=function(){b.remove();avDesde(mm)};$("f-msg").after(b)}})};
 function fdate(f){if(!f)return"Sin fecha";var p=f.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
 function renderList(){
  var L=FX.slice().reverse();

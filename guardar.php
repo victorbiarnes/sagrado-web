@@ -67,6 +67,44 @@ if ($hash === '') out(['ok' => false, 'error' => 'Primero hay que elegir la clav
 if (!password_verify((string)($in['clave'] ?? ''), $hash)) fail('Clave incorrecta.', $fails, $failFile);
 if ($fails) @file_put_contents($failFile, '[]');
 
+// ---------- Avisos (notificaciones push con OneSignal) ----------
+$osFile = $dir . '/onesignal.php';
+$OS_APP = '87db230f-2a16-43bb-9afd-9542dbe1ed52';
+function osKey($f) { if (!is_file($f)) return ''; $raw = file_get_contents($f); $nl = strpos($raw, "\n"); $c = $nl === false ? [] : json_decode(substr($raw, $nl + 1), true); return is_array($c) ? (string)($c['key'] ?? '') : ''; }
+if ($action === 'aviso_estado') out(['ok' => true, 'tieneClave' => osKey($osFile) !== '']);
+if ($action === 'aviso_clave') {
+    $k = trim((string)($in['key'] ?? ''));
+    if (strlen($k) < 20 || preg_match('/\s/', $k)) out(['ok' => false, 'error' => 'Esa clave no parece válida. Copiala completa desde OneSignal.'], 400);
+    file_put_contents($osFile, "<?php exit; ?>\n" . json_encode(['key' => $k]) . "\n");
+    out(['ok' => true]);
+}
+if ($action === 'aviso') {
+    $key = osKey($osFile);
+    if ($key === '') out(['ok' => false, 'error' => 'Falta cargar la clave de OneSignal (REST API Key).'], 409);
+    $tit = clean($in['titulo'] ?? '', 60); $txt = clean($in['texto'] ?? '', 180);
+    if ($tit === '' || $txt === '') out(['ok' => false, 'error' => 'Completá el título y el mensaje.'], 400);
+    $url = (string)($in['url'] ?? '');
+    if (!preg_match('#^https://atleticosagradocorazon\.com\.ar/#', $url)) $url = 'https://atleticosagradocorazon.com.ar/';
+    $body = json_encode(['app_id' => $OS_APP, 'target_channel' => 'push', 'included_segments' => ['Total Subscriptions'],
+        'headings' => ['en' => $tit, 'es' => $tit], 'contents' => ['en' => $txt, 'es' => $txt], 'url' => $url], JSON_UNESCAPED_UNICODE);
+    $auth = (strpos($key, 'os_v2_') === 0 ? 'Key ' : 'Basic ') . $key;
+    $hdr = ['Content-Type: application/json; charset=utf-8', 'Authorization: ' . $auth];
+    $resp = false; $code = 0;
+    if (function_exists('curl_init')) {
+        $ch = curl_init('https://api.onesignal.com/notifications?c=push');
+        curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => $body, CURLOPT_HTTPHEADER => $hdr, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 20]);
+        $resp = curl_exec($ch); $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE); curl_close($ch);
+    } else {
+        $ctx = stream_context_create(['http' => ['method' => 'POST', 'header' => implode("\r\n", $hdr), 'content' => $body, 'timeout' => 20, 'ignore_errors' => true]]);
+        $resp = @file_get_contents('https://api.onesignal.com/notifications?c=push', false, $ctx);
+        if (isset($http_response_header[0]) && preg_match('/\s(\d{3})\s/', $http_response_header[0], $mm)) $code = (int)$mm[1];
+    }
+    $j = json_decode((string)$resp, true);
+    if ($code >= 200 && $code < 300 && !empty($j['id'])) out(['ok' => true, 'id' => $j['id']]);
+    $err = is_array($j) && !empty($j['errors']) ? (is_array($j['errors']) ? implode(' ', array_map(function ($e) { return is_string($e) ? $e : json_encode($e); }, $j['errors'])) : (string)$j['errors']) : 'OneSignal no respondió (código ' . $code . ').';
+    out(['ok' => false, 'error' => 'No se pudo mandar: ' . $err], 502);
+}
+
 $lock = fopen($dir . '/.lock', 'c');
 flock($lock, LOCK_EX);
 $fx = readFx($fxFile);
